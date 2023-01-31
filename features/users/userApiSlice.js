@@ -8,7 +8,7 @@ const usersAdapter = createEntityAdapter({})
 
 const initialState = usersAdapter.getInitialState()
 
-export const usersApiSLice = apiSlice.injectEndpoints({
+export const usersApiSlice = apiSlice.injectEndpoints({
      endpoints: builder => ({
          getUsers: builder.query({
              query: () => '/users',
@@ -27,7 +27,7 @@ export const usersApiSLice = apiSlice.injectEndpoints({
                  if (result?.ids) {
                      return [
                          { type: 'User', id:'LIST' },
-                         ...results.ids.map(id => ({ type: 'Users', id }))
+                         ...result.ids.map(id => ({ type: 'Users', id }))
                      ]
                  } else return [{ type: 'User', id: 'LIST' }]
              }
@@ -37,10 +37,10 @@ export const usersApiSLice = apiSlice.injectEndpoints({
 
 export const {
  useGetUsersQuery,
-} = usersApiSLice
+} = usersApiSlice
 
 // returns the query results object 
-export const selectUsersResult = userApiSlice.endpoints.getUsers.select()
+export const selectUsersResult = usersApiSlice.endpoints.getUsers.select()
 
 // creates momoized selector
 const selectUsersData = createSelector(

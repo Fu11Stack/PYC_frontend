@@ -1,4 +1,5 @@
 import { useGetUsersQuery } from "./userApiSlice"
+import User from "./Users"
 
 const UserList = () => {
 
@@ -14,15 +15,16 @@ const UserList = () => {
 
     if(isLoading) content = <p>Loading...</p>
 
-    if(isError) content = <p className="errmsg">{error?.data?.message}</p>
+    if(isError) { 
+        content = <p className="errmsg">{error?.data?.message}</p>
 
-}
+    }
 
-if(isSuccess) {
+    if (isSuccess) {
     const { ids } = users
 
     const tableContent = ids?.length
-    ? ids.map(userId => < User key={userid} userId ={userID}/>)
+    ? ids.map(userId => < User key={userId} userId ={userId}/>)
     : null
 
     content = (
@@ -38,7 +40,11 @@ if(isSuccess) {
                 {tableContent}
             </tbody>
         </table>
-    )
+        )
+    }
+
+    return content
+
 }
 
 export default UserList
