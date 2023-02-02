@@ -4,43 +4,44 @@ import {
 } from "@reduxjs/toolkit"
 import { apiSlice } from "../../app/api/apiSlice"
 
-const notesAdapter = createEntityAdapter({})
-
+const notesAdapter = createEntityAdapter({
+    sortComparer: (a, b) => (a.completed === b.completed) ? 0 : a.completed ? 1 : -1
+})
 const initialState = notesAdapter.getInitialState()
 
-export const notesApiSLice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
-      getnotes: builder.query({
-          query: () => '/notes',
-          validateStatus: (response, result) => {
-              return response.status === 200 && !result.Error
-          },
-          keepUnusedDatafor: 5,
-          transformResponse: responseData => {
-              const loadednotes = responseData.map(note => {
-                  note.id = note._id
-                  return note
-              });
-              return notesAdapter.setAll(initialState, loadednotes)
-          },
-          providedTags: (result, error, arg) => {
-              if (results?.ids) {
-                  return [
-                      { type: 'Note', id:'LIST' },
-                      ...results.ids.map(id => ({ type: 'Note', id }))
-                  ]
-              } else return [{ type: 'Note', id: 'LIST' }]
-          }
-      }),
-  }),
+export const notesApiSlice = apiSlice.injectEndpoints({
+    endpoints: builder => ({
+        getNotes: builder.query({
+            query: () => '/notes',
+            validateStatus: (response, result) => {
+                return response.status === 200 && !result.is2Error
+            },
+            keepUnusedDatafor: 5,
+            transformResponse: responseData => {
+                const loadedNotes = responseData.map(note => {
+                    note.id = note._id
+                    return note
+                });
+                return notesAdapter.setAll(initialState, loadedNotes)
+            },
+            providedTags: (result, error, arg) => {
+                if (result?.ids) {
+                    return [
+                        { type: 'Note', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Note', id }))
+                    ]
+                } else return [{ type: 'Note', id: 'LIST' }]
+            }
+        }),
+    }),
 })
 
 export const {
-useGetNotesQuery,
-} = notesApiSLice
+useGetNotesQuery
+} = notesApiSlice
 
 // returns the query results object 
-export const selectnotesResult = noteApiSlice.endpoints.getnotes.select()
+export const selectnotesResult = notesApiSlice.endpoints.getNotes.select()
 
 // creates momoized selector
 const selectNotesData = createSelector(
