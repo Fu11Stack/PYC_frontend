@@ -5,12 +5,12 @@ const Public = () => {
    const content = (
    <section className="public">
        <header>
-           <h1>Welcome to <span className="nowrap">Dan D. Repairs!</span></h1>
+           <h1>Welcome to <span className="nowrap">Pruneyard Cinema Portal</span></h1>
        </header>
        <main className="public__main">
            <p>Pruneyard Cinemas Login Portal</p>
            <address className="public__addr">
-               PruneYard Cinema's<br />
+               Pruneyard Cinema's<br />
                555 Foo Drive<br />
                Foo City, CA 12345<br />
                <a href="tel:+15555555555">(555) 555-5555</a>
