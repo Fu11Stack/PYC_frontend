@@ -1,11 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const noteController = require('../controllers/noteControllers')
+const verifyJWT = require('../middleware/verifyJWT')
+
+router.use(verifyJWT)
 
 router.route('/')
   .get(noteController.getAllNotes)
   .post(noteController.createNewNote)
-  .patch(noteController.updatedNote)
+  .patch(noteController.updateNote)
   .delete(noteController.deleteNote)
 
 
