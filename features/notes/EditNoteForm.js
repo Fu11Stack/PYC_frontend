@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import { usesNavigate } from "react-router-dom"
-import { useAddNewNoteMutation, useDeleteNoteMutation, useUpdateNoteMutation } from "./notesApiSlice"
+import { useNavigate } from "react-router-dom"
+import { useDeleteNoteMutation, useUpdateNoteMutation } from "./notesApiSlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSave } from "@fortawesome/free-solid-svg-icons"
+import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 
 const EditNoteForm = ({ note, users }) => {
 
@@ -56,7 +56,7 @@ const EditNoteForm = ({ note, users }) => {
    const updated = new Date(note.updatedAt).toLocaleString('en-US', {day: 'numric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'
   })
 
-   const options = user.map(user => {
+   const options = users.map(user => {
     return (
      <option
        key={user.id}
@@ -82,7 +82,7 @@ const EditNoteForm = ({ note, users }) => {
         <button
          className="icon-button"
          title="Save"
-         onClick={onSaveNoteClicked}
+         onClick={onSavedNoteClicked}
          disabled={!canSave}
          >
           <FontAwesomeIcon icon={faSave} />
@@ -134,7 +134,7 @@ const EditNoteForm = ({ note, users }) => {
             name="username"
             className="form__select"
             value={userId}
-            onChange={onUserChanged}
+            onChange={onUserIdChanged}
             >{options} 
            </select>
           </div>
