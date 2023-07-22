@@ -1,5 +1,4 @@
-PYC
- Front end
+ Pruneyard Front end
  
  ▶ Languages and Tools:
 <h3 align="left">▶ Languages and Tools:</h3>
